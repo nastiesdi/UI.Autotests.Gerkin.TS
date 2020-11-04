@@ -1,5 +1,5 @@
 {
-  "name": "publist-automation",
+  "name": "serenity-js-poc",
   "version": "1.0.0",
   "description": "SerenityJS Publist Automation",
   "main": "index.js",
@@ -26,6 +26,7 @@
   "dependencies": {
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "chromedriver": "^86.0.0",
     "list-files-in-dir": "^0.1.5",
     "nodemon": "^2.0.4",
     "protractor-api-resource": "^1.0.3",
