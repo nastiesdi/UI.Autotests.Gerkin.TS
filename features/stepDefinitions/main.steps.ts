@@ -1,7 +1,7 @@
 import { browser } from "protractor";
 import { BrowserHacks } from "../../support/browserHacks";
 import chai = require('chai');
-import {OnetehPage} from "../pageObjects/oneteh.page";
+import {OnetehPage} from "../pageObjects/main.page";
 
 export = function cventSteps() {
 
@@ -43,13 +43,36 @@ export = function cventSteps() {
     //Can only be used with When, Then, And expressions in .feature file When enter "qqqqq" in Search field on the onetehpage
     this.Then(/^enter "(.*?)" in Search field on the onetehpage/, async (value) => {
         await oneteh.SearchOnMainPage(value);
+        await oneteh.Loaded();
+    });
+
+    // Can only be used with When, Then, And expressions in .feature file
+    this.Then(/^I see "(.*?)" text/, async (value) => {
+        await oneteh.NothingFounded(value);
     });
 
     // Can only be used with When, Then, And expressions in .feature file
     this.Then(/^I see "(.*?)" item/, async (value) => {
-        console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ here' + value)
-        await oneteh.NothingFounded;
-        console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ here' + oneteh.NothingFounded(value))
-        console.log(oneteh.NothingFounded)
+        await oneteh.FindItem(value);
+    });
+
+    this.Then(/^I see close search button/, async () => {
+        await oneteh.CloseSearchButtonDisplayed();
+    });
+    
+    this.Then(/^I hower "(.*?)" field on the main menu/, async (value) => {
+        await oneteh.OpenDropdownMenu();
+    });
+
+    this.Then(/^I go to the items section/, async () => {
+        await oneteh.goToSectionItems();
+    });
+
+    this.Then(/^I go to the plates items section/, async () => {
+        await oneteh.goToSectionVannaItems();
+    });
+  
+    this.Then(/^Title Items for kithen is displayed/, async () => {
+        await oneteh.isItemSelected();
     });
 }

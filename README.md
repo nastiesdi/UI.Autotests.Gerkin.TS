@@ -9,7 +9,7 @@ Open folder project in VS Code, and then in terminal: <br />
 > npm run update-reporter <br />
 
 # Usage: 
-in the first terminal window in VS Code: <br />
+in the first terminal window in VS Code:  dont work, it is write to install Java<br />
 > npm run webdriver <br />
 
 in the second terminal window in VS Code: <br />
