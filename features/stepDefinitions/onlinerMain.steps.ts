@@ -1,17 +1,19 @@
 import { browser } from "protractor";
 import { BrowserHacks } from "../../support/browserHacks";
 import chai = require('chai');
-import {Header} from "../pageObjects/header.page";
+import {NewsPage} from "../pageObjects/newsList.page";
+import { prependOnceListener } from "process";
 
 export = function cventSteps() {
 
-    
+    //Default cucumber timeout
     this.setDefaultTimeout(600 * 1000);
 
+    //Loading browser hacks
     let browserHacks = new BrowserHacks;
 
     //Loading Event Page Object
-    let ItemList = new Header;
+    let onlMainPage = new NewsPage;
 
     //Unique identifier    
     let uniqueIndentifier: string;
@@ -23,6 +25,7 @@ export = function cventSteps() {
 
     //Hooks
     this.Before(async () => {
+        await onlMainPage.getLocatorByName()
         //ACTIONS BEFORE EXECUTING EACH TEST, I.E. SOME PRE-REQS FOR TEST OR SETUP
     });
 
@@ -31,9 +34,16 @@ export = function cventSteps() {
         await browserHacks.ClearBrowserData();
     });
 
-   // Step Definitions
+    //Step Definitions
 
-    this.Then(/^Right count of item is displayed/, async () => {
-        await ItemList.IsCountItemsInCartRight();
+    //Given expression, can only be used with Given in .feature file
+    this.Given(/^I am on onliner homepage$/, async () => {
+        await onlMainPage.OpenPage(browser.params.onlinerByURL);
+        await onlMainPage.Loaded();
     });
+
+    this.Then(/^I click on "(.*?)" section/, async (nameSection) => {
+        await onlMainPage.goToSection(nameSection);
+    });
+
 }

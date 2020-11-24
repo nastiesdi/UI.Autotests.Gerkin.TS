@@ -1,17 +1,19 @@
 import { browser } from "protractor";
 import { BrowserHacks } from "../../support/browserHacks";
 import chai = require('chai');
-import {Translator} from "../pageObjects/translater.page";
+import {Header} from "../pageObjects/header.page";
+import { prependOnceListener } from "process";
 
 export = function cventSteps() {
 
-    
+    //Default cucumber timeout
     this.setDefaultTimeout(600 * 1000);
 
+    //Loading browser hacks
     let browserHacks = new BrowserHacks;
 
     //Loading Event Page Object
-    let translator = new Translator;
+    let header = new Header;
 
     //Unique identifier    
     let uniqueIndentifier: string;
@@ -23,6 +25,7 @@ export = function cventSteps() {
 
     //Hooks
     this.Before(async () => {
+        // await header.getLocatorByName()
         //ACTIONS BEFORE EXECUTING EACH TEST, I.E. SOME PRE-REQS FOR TEST OR SETUP
     });
 
@@ -31,25 +34,12 @@ export = function cventSteps() {
         await browserHacks.ClearBrowserData();
     });
 
-   // Step Definitions
+    //Step Definitions
 
-    this.Given(/^I am on google translate page$/, async () => {
-        await browser.navigate().to('https://translate.google.com/');
-        // await oneteh.Loaded();
+    //Given expression, can only be used with Given in .feature file
+    this.Then(/^I open "(.*?)" page  from header/, async (nameSection) => {
+        await header.openNewPageFromMainMenu(nameSection);
     });
 
-    this.Then(/^I click apps button/, async () => {
-        await translator.OpenAllApps()
-        // await Translator.Loaded();
-    });
-
-    this.Then(/^I click on google calendar icon/, async () => {
-        await translator.OpenGoogleCalendar()
-        // await Translator.Loaded();
-    });
     
-    this.Then(/^login form is displayed/, async () => {
-        await translator.LoginFormDisplayed()
-        // await Translator.Loaded();
-    });
 }
