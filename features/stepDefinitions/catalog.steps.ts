@@ -63,7 +63,47 @@ export = function cventSteps() {
         await catalogPage.catalogNavigationListOpened();
     });
 
-    this.Then(/^I click on one of the category/, async () => {
-        await catalogPage.openItemFronCategory('test');
+    this.Then(/^I click on mobilePhone category/, async () => {
+        await catalogPage.openItemFronCategory();
+    });
+
+    this.Then(/^I click on headphones category/, async () => {
+        await catalogPage.openHeadphonesCategory();
+    });
+    
+    this.Then(/^(.*?) item is displayed/, async (brandName) => {
+        await catalogPage.rightItemAreDisplayed(brandName);
+    });
+
+    this.Then(/^I click on watch category/, async () => {
+        await catalogPage.openWatchCategory();
+    });
+
+    this.Then(/^I click on all proposals/, async () => {
+        await catalogPage.openAllProposalsy();
+    });
+    
+    this.Then(/^I see (.*?) product is displayed/, async (productName) => {
+        await catalogPage.isProductRight(productName);
+    });
+
+    this.Then(/^I add product to compare/, async (productName) => {
+        await catalogPage.addToCompare();
+    });
+
+    this.Then(/^Text was changed/, async () => {
+        await catalogPage.textChangedAfterAddingToCompare();
+    });
+
+    this.Then(/^I add product to cart/, async () => {
+        await catalogPage.addToCart();
+    });
+
+    this.Then(/^Text on button changed/, async () => {
+        await catalogPage.textOnButtonChanged();
+    });
+
+    this.Then(/^Bage is displayed/, async () => {
+        await catalogPage.bageIsDisplayed();
     });
 }

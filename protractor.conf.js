@@ -71,7 +71,7 @@ exports.config = {
         //-----------------------------------------
         //TODO: Optimize logger for parallel mode
         shardTestFiles: true,
-        maxInstances: 2,
+        maxInstances: 1,
         chromeOptions: {
             //Standard mode
             args: ["--window-size=1920,1080"]

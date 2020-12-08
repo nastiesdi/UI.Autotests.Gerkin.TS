@@ -41,5 +41,29 @@ export = function cventSteps() {
         await header.openNewPageFromMainMenu(nameSection);
     });
 
+    this.Then(/^I see "(.*?)" section/, async (nameSection) => {
+        await header.Loaded()
+        await header.rightUrlDisplayed(nameSection);
+    });
+
+    
+    this.Then(/^I can see "(.*?)" section is highlated/, async (nameSection) => {
+        await header.rightTabIsHighlated(nameSection);
+    });
+
+    this.Then(/^I enter "(.*?)" in search field/, async (productName) => {
+        await header.enterInSearchField(productName);
+    });
+
+    this.Then(/^I see fast search modal/, async () => {
+        await header.fastSearchModalDisplayed();
+    });
+
+    this.Then(/^Searched items "(.*?)" are displayed/, async (productName) => {
+        await header.rightItemAreDisplayed(productName);
+    });
+
+    
+
     
 }

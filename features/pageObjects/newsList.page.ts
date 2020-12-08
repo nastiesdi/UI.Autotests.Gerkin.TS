@@ -78,17 +78,17 @@ export class NewsPage {
 
     public async goToSection(sectionName:string): promise.Promise<void> {
         await browser.wait(ExpectedConditions.presenceOf(mainPageSection.get(sectionName).finderOnMainPage), defaultTimeout, `${sectionName} section not loaded`);
-        await mainPageSection.get(sectionName).finderOnMainPage.click()
+        await mainPageSection.get(sectionName).finderOnMainPage.click();
     }
 
     public async rightUrl(sectionName:string): promise.Promise<void> {
-        let curentUrl = await browser.getCurrentUrl()
-        let expectedUrl = await mainPageSection.get(sectionName).pageUrl
-        await assert.equal(curentUrl, expectedUrl, `ER: ${expectedUrl}, AR: ${curentUrl}`)
+        let curentUrl = await browser.getCurrentUrl();
+        let expectedUrl = await mainPageSection.get(sectionName).pageUrl;
+        await assert.equal(curentUrl, expectedUrl, `ER: ${expectedUrl}, AR: ${curentUrl}`);
     }
     
     public async rightItemSelected(sectionName:string): promise.Promise<void> {
-        let activeItemInMenu = await mainPageSection.get('common').activeItemInMenu
+        let activeItemInMenu = await mainPageSection.get('common').activeItemInMenu;
         await assert.equal(await activeItemInMenu.getText(), mainPageSection.get(sectionName).russianWord, `${await activeItemInMenu.getText()} is not equal to ${mainPageSection.get(sectionName).russianWord}`);
     }
 

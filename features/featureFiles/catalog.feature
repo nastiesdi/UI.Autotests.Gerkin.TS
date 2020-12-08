@@ -55,12 +55,37 @@ Feature: Catalog
         |beurer|
 
     @regression    
-    @onliner
-    Scenario: I can open hover
+    Scenario: I can open itemlist by hover
 
         Given I am on onliner homepage
         When I open "Каталог" page  from header
         And  I click on brend "Honor"
         Then Catalog navigation list opened
-        And I click on one of the category
-        
+
+    @regression    
+    Scenario: I see Honor items
+
+        Given I am on onliner homepage
+        When I open "Каталог" page  from header
+        And  I click on brend "Honor"
+        And I click on mobilePhone category
+        Then HONOR item is displayed
+
+      
+    @regression  
+    Scenario: I see Honor headphones
+
+        Given I am on onliner homepage
+        When I open "Каталог" page  from header
+        And  I click on brend "Honor"
+        And I click on headphones category
+        Then HONOR item is displayed
+    
+    @regression 
+    Scenario: I see Honor headphones
+
+        Given I am on onliner homepage
+        When I open "Каталог" page  from header
+        And  I click on brend "Honor"
+        And I click on watch category
+        Then HONOR item is displayed

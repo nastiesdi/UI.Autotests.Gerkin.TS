@@ -3,7 +3,7 @@ Feature: Navigation from onliner main Page
 
     This tests check if right pages are opened by clicking on general section of main page
 
-     @regression   
+    @regression   
     Scenario: People page is opened by clickin on People section
 
         Given I am on onliner homepage
@@ -13,7 +13,7 @@ Feature: Navigation from onliner main Page
         And I see "people" main block
         And I see rubrics menu
         
-     @regression   
+    @regression   
     Scenario: Catalog is opened by clickin on Catalog section
 
         Given I am on onliner homepage
@@ -21,7 +21,7 @@ Feature: Navigation from onliner main Page
         Then I see "catalog" url displayed
         And I see "catalog" main block
 
-     @regression   
+    @regression   
     Scenario: Opinions is opened by clickin on Opinion section
 
         Given I am on onliner homepage

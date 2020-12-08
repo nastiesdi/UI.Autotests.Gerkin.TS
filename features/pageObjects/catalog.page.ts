@@ -2,6 +2,7 @@ import { AssertionError, strict } from "assert";
 // import { assert } from "console";
 import { browser, ExpectedConditions, promise, element, by } from "protractor";
 import { catalogSelectors } from "../objectsRepository/catalog.obj";
+import { headerRepository } from "../objectsRepository/header.obj";
 
 const defaultTimeout = 6000;
 const assert = require('chai').assert;
@@ -15,6 +16,7 @@ let brandItem = new Map<string, any>()
 export class Catalog {   
     //Locators      
     readonly catalogElem = new catalogSelectors;
+    readonly header = new headerRepository;
 
     public async PrepareDict(): promise.Promise<void> {
         naviItems.set('Электроника', 1)
@@ -62,7 +64,7 @@ export class Catalog {
     }
 
     public async choisenCategoryIsActive(sectionName:string): promise.Promise<void> {
-        let dataId = await this.catalogElem.ActiveItemInNavi.getAttribute('data-id')
+        let dataId = await this.catalogElem.ActiveItemInNavi.getAttribute('data-id');
         await assert.equal(dataId, naviItems.get(sectionName), `${dataId} is not equal to ${naviItems.get(sectionName)}`);
     }
 
@@ -71,13 +73,65 @@ export class Catalog {
     }
 
     public async openBrand(sectionName:string): promise.Promise<void> {
-        let selector = await this.catalogElem.getBrendItemSel(brandItem.get(sectionName))
+        let selector = await this.catalogElem.getBrendItemSel(brandItem.get(sectionName));
         await selector.click()
     }
 
-    public async openItemFronCategory(sectionName:string): promise.Promise<void> {
-        let blockElement = await this.catalogElem.naviListOpened.getWebElement()
-        await browser.actions().mouseMove(this.catalogElem.mobilePhone).click().perform()
-        // await browser.actions().mouseMove(blockElement.findElement(by.xpath("//div[contains(text(),'Мобильные')]"))).click().perform()
+    public async openItemFronCategory(): promise.Promise<void> {
+        await browser.actions().mouseMove(this.catalogElem.honorMobilePhone).click().perform();
     }
+
+    public async openHeadphonesCategory(): promise.Promise<void> {
+        await browser.actions().mouseMove(this.catalogElem.honorHeadphones).click().perform();
+    }
+
+    public async openWatchCategory(): promise.Promise<void> {
+        await browser.actions().mouseMove(this.catalogElem.honorWatch).click().perform();
+    }
+
+    public async openAllProposalsy(): promise.Promise<void> {
+        await browser.wait(ExpectedConditions.presenceOf(this.header.modalIframe), defaultTimeout, "Iframe not loaded");
+        await browser.switchTo().frame(this.header.modalIframe.getWebElement());
+        await browser.wait(ExpectedConditions.presenceOf(this.catalogElem.searchElement), defaultTimeout, "Iframe not loaded");
+        await this.catalogElem.searchElement.click();
+    }
+
+
+    public async isProductRight(ProductName): promise.Promise<void> {
+        let headerText = await this.catalogElem.productHeader.getText(); 
+        await assert.equal(ProductName, headerText, `${headerText} is not equal to ${ProductName}`);
+    }
+
+    public async addToCompare(): promise.Promise<void> {
+        await this.catalogElem.addToCompareCheck.click();
+    }
+
+    public async textChangedAfterAddingToCompare(): promise.Promise<void> {
+        let newText = await this.catalogElem.addToCompareText.getText();
+        await assert.equal(newText, "Добавлен к сравнению", `${newText} is not equal to ${newText}`);
+    }
+
+    public async addToCart(): promise.Promise<void> {
+        await this.catalogElem.firstItemAddToCart.click();
+    }
+
+    public async textOnButtonChanged(): promise.Promise<void> {
+        let newText = await this.catalogElem.firstItemAddToCart.getText();
+        await assert.equal(newText, "В корзине", `${newText} is not equal to ${newText}`);
+    }
+
+    public async bageIsDisplayed(): promise.Promise<void> {
+        await browser.wait(ExpectedConditions.presenceOf(this.catalogElem.cartCounter), defaultTimeout, "Cart counter not loaded");
+        let newText = await this.catalogElem.cartCounter.getText();
+        await assert.equal(newText, "1", `${newText} is not equal to ${newText}`);
+    }
+    
+    public async rightItemAreDisplayed(brendName:string): promise.Promise<void> {
+        let blockElement= await this.catalogElem.allItemOnOpenedList.getText();
+        let ms= await String(blockElement).split(".,");
+        for (let i of ms) {
+            await assert.include(i.toUpperCase(), brendName, `${brendName} is not in ${i}`);
+        }
+    }
+
 }   
